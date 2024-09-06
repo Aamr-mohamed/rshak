@@ -7,6 +7,7 @@ import axios from "axios";
 import { customToast } from "../../Utils/toast";
 import { toast } from "react-toastify";
 import * as yup from "yup";
+import handWriting from "../../assets/loginRaeshag.png";
 
 export default function UserInfo() {
 
@@ -38,10 +39,14 @@ export default function UserInfo() {
 	return (
 		<div className="flex h-screen">
 			<div className='w-2/5 flex flex-col justify-center items-center py-[113px] pl-[38px]'>
+        <img src={handWriting} className="w-[35%]" alt="" />
 				<div className='w-full h-full bg-contain bg-no-repeat bg-center' style={{ backgroundImage: `url(${loginPic})` }}></div>
+        <h1 className="text-center text-[#1769AE] text-5xl font-bold">
+          تمتع بصحة أفضل مع رِشاق
+        </h1>
 			</div>
 			<div className='w-3/5 flex flex-col justify-center items-center pl-20 pr-10' style={{ backgroundImage: `url(${bgVector})` }}>
-				<div className="flex flex-col justify-center w-[70%]">
+				<div className="flex flex-col justify-center w-[60%]">
 					<div className='bg-white flex flex-col justify-center items-center gap-5 px-20  py-5'>
 						<div className="w-full flex flex-row justify-center items-center mt-5">
 							<div className="w-full bg-gray-200 rounded-full h-2">

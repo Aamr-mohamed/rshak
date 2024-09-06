@@ -89,11 +89,11 @@ export default function Login() {
 								<Form className='flex flex-col gap-10'>
 									<h1 className='font-bold text-2xl leading-8 text-[#1EA4A3]'>تسجيل الدخول</h1>
 									<div className='relative w-[100%]'>
-										<input type="email" onChange={props.handleChange} onBlur={props.handleBlur} value={props.values.email} name="email" className='w-full px-[20px] py-[10px] rounded-lg border-[1.5px] border-[#1769AE] text-sm text-right text-[#1EA4A3]' placeholder='البريد الإلكتروني' />
+										<input type="email" onChange={props.handleChange} onBlur={props.handleBlur} value={props.values.email} name="email" className='w-full px-[20px] py-[10px] rounded-lg border-[1.5px] border-[#1769AE] text-sm text-right text-[#1EA4A3] placeholder-[#1EA4A3]' placeholder='البريد الإلكتروني' />
 										<MdOutlineEmail className='absolute left-[5%] top-[50%] translate-y-[-50%] text-[#1EA4A3]' />
 									</div>
 									<div className='relative w-[100%]'>
-										<input type="password" onChange={props.handleChange} onBlur={props.handleBlur} value={props.values.password} name="password" className='w-full px-[20px] py-[10px] rounded-lg border-[1.5px] border-[#1769AE] text-sm text-right text-[#1EA4A3]' placeholder='كلمة المرور' />
+										<input type="password" onChange={props.handleChange} onBlur={props.handleBlur} value={props.values.password} name="password" className='w-full px-[20px] py-[10px] rounded-lg border-[1.5px] border-[#1769AE] text-sm text-right text-[#1EA4A3] placeholder-[#1EA4A3]' placeholder='كلمة المرور' />
 										<FaLock className='absolute left-[5%] top-[50%] translate-y-[-50%] text-[#1EA4A3]' />
 									</div>
 
