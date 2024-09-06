@@ -40,7 +40,7 @@ export default function SecUserInfo() {
 			</div>
 			<div className='w-3/5 flex flex-col justify-center items-center pl-20 pr-10' style={{ backgroundImage: `url(${bgVector})` }}>
 				<div className="flex flex-col justify-center w-[70%]">
-					<div className='bg-white flex flex-col justify-center items-center gap-5 px-20  py-5'>
+					<div className='bg-white flex flex-col justify-center items-center gap-5 px-20 rounded-lg py-5'>
 						<div className="w-full flex flex-row justify-center items-center mt-5">
 							<div className="w-full bg-gray-200 rounded-full h-2">
 								<div className="bg-blue-600 h-2.5 rounded-full w-[70%]"></div>
