@@ -6,12 +6,16 @@ import UserInfo from './Pages/UserInfo/userInfo';
 import SecUserInfo from './Pages/UserInfo/secUserInfo';
 import LastUserInfo from './Pages/UserInfo/lastUserInfo';
 import CalenderUserInfo from './Pages/UserInfo/calenderUserInfo';
+import UserDashboard from './Pages/UserDashboard/UserDashboard';
+import Users from './Pages/Users/Users';
 
 function App() {
 	return (
 		<div className="App">
 			<Routes>
 				<Route path="/" element={<Home />} />
+				<Route path="/userDashboard" element={<UserDashboard />} />
+				<Route path="/users" element={<Users />} />
 				<Route path="/login" element={<Login />} />
 				<Route path="/userInfo" element={<UserInfo />} />
 				<Route path="/contUserInfo" element={<SecUserInfo />} />

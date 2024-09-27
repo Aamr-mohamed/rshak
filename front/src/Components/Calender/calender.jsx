@@ -47,19 +47,20 @@ const CalendarCard = () => {
     formattedDate = format(day, "yyyy-MM-dd");
     const isCurrentMonth = isSameMonth(day, monthStart);
     const isToday = isSameDay(day, new Date());
+    const isPastDay = day < new Date(); // Check if the day is in the past
 
     days.push(
       <div
         key={day}
-        className={`p-1 border rounded-md text-center text-white
-                    ${!isCurrentMonth ? "bg-gray-300" : ""} 
-                    ${isCurrentMonth && attendanceData[formattedDate] === "attended" ? "bg-[#1EA4A3]" : ""} 
-                    ${isCurrentMonth && attendanceData[formattedDate] === "not attended" ? "bg-[#1769AE]" : ""} 
-                    ${isCurrentMonth && !attendanceData[formattedDate] && day > new Date() ? "bg-blue-200" : ""} 
+        className={`p-1 border rounded-md text-center
+                    ${!isCurrentMonth ? "bg-gray-300 text-gray-500" : ""}
+                    ${isCurrentMonth && isPastDay && attendanceData[formattedDate] === "attended" ? "bg-[#1ea4a3] text-white" : ""}
+                    ${isCurrentMonth && isPastDay && attendanceData[formattedDate] === "not attended" ? "bg-[#1769ae] text-white" : ""}
+                    ${isCurrentMonth && !attendanceData[formattedDate] && day < new Date() ? "bg-[#1769ae] text-white" : ""}
                     ${isToday ? "border-2 border-red-500" : ""}`}
       >
         {format(day, "d")}
-      </div>,
+      </div>
     );
     day = addDays(cloneDay, 1);
   }
@@ -80,3 +81,4 @@ const CalendarCard = () => {
 };
 
 export default CalendarCard;
+
