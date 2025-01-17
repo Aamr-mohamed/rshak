@@ -1,0 +1,30 @@
+.calender-container {
+  /* ~~~ container styles ~~~ */
+  border-radius: 3px;
+  button {
+    margin: 3px;
+    border: 0;
+    border-radius: 3px;
+    padding: 1px 0;
+  }
+  .react-calendar__navigation {
+    display: flex;
+
+    .react-calendar__navigation__label {
+      font-weight: bold;
+    }
+
+    .react-calendar__navigation__arrow {
+      flex-grow: 0.333;
+    }
+  }
+  .react-calendar__month-view__weekdays {
+    text-align: center;
+  }
+  .react-calendar__month-view__days__day--neighboringMonth {
+    opacity: 0.7;
+  }
+  .react-calendar__month-view__days__day--neighboringMonth {
+    color: #1769ae4d;
+  }
+}

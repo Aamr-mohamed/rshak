@@ -1,0 +1,121 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "mysql"
+    url      = env("DATABASE_URL")
+}
+
+model Admin {
+    id        Int      @id @default(autoincrement())
+    email     String   @unique
+    password  String
+    token     String
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model user {
+    id                    String                  @id @default(uuid()) // Primary key
+    username              String
+    email                 String                  @unique
+    phoneNumber           String
+    homeAddress           String
+    workAddress           String
+    age                   Int
+    job                   String
+    bodyInfo              bodyInfo[]
+    bodyCheckup           bodyCheckup[]
+    checkups              checkup[]
+    monthlyAttendance     monthlyAttendance[]
+    monthlyFoodDispensing monthlyFoodDispensing[]
+    mealsSchedule         mealsSchedule[]
+    createdAt             DateTime                @default(now())
+    updatedAt             DateTime                @updatedAt
+}
+
+model bodyInfo {
+    id          String   @id @default(uuid()) // Primary key
+    userId      String
+    foodType    String
+    gymAddress  String
+    gymTime     String
+    bodyType    String
+    height      Int
+    weight      Int
+    diabetesNum Int
+    date        DateTime @default(now())
+    user        user     @relation(fields: [userId], references: [id], onDelete: Cascade)
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+}
+
+model bodyCheckup {
+    id        String   @id @default(uuid()) // Primary key
+    userId    String
+    disease1  String
+    disease2  String
+    disease3  String
+    disease4  String
+    medicine1 String
+    medicine2 String
+    medicine3 String
+    medicine4 String
+    date      DateTime @default(now())
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    user      user     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model checkup {
+    id                 String   @id @default(uuid()) // Primary key
+    userId             String
+    checkupName        String
+    checkupDate        String
+    checkupPercentage  String
+    checkupAverage     String
+    checkupDescription String
+    checkupImageName   String?
+    date               DateTime @default(now())
+    createdAt          DateTime @default(now())
+    updatedAt          DateTime @updatedAt
+    user               user     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model monthlyAttendance {
+    id         String   @id @default(uuid()) // Primary key
+    userId     String
+    date       String
+    attendance Boolean
+    createdAt  DateTime @default(now())
+    updatedAt  DateTime @updatedAt
+    user       user     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model monthlyFoodDispensing {
+    id             String   @id @default(uuid()) // Primary key
+    userId         String
+    date           String
+    foodDispensing Boolean
+    createdAt      DateTime @default(now())
+    updatedAt      DateTime @updatedAt
+    user           user     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model mealsSchedule {
+    id             String   @id @default(uuid()) // Primary key
+    userId         String
+    specialMeals   String
+    monthlyCheckup String
+    userNotes      String?
+    createdAt      DateTime @default(now())
+    updatedAt      DateTime @updatedAt
+    user           user     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}

@@ -1,84 +1,67 @@
-import React, { useState } from "react";
-import {
-  format,
-  startOfMonth,
-  endOfMonth,
-  startOfWeek,
-  endOfWeek,
-  addDays,
-  addMonths,
-  subMonths,
-  isSameDay,
-  isSameMonth,
-} from "date-fns";
+import React, { useState, useEffect } from "react";
+import Calendar from "react-calendar";
+import "./calender.css";
 
-const CalendarCard = () => {
-  const [currentDate, setCurrentDate] = useState(new Date());
-  const [attendanceData, setAttendanceData] = useState({
-    "2024-08-01": "attended",
-    "2024-08-02": "attended",
-    "2024-08-03": "attended",
-    "2024-08-04": "attended",
-    "2024-08-05": "attended",
-    "2024-08-06": "not attended",
-    "2024-08-07": "not attended",
-    "2024-08-08": "not attended",
-    "2024-08-09": "not attended",
-    "2024-08-10": "not attended",
-    "2024-08-11": "not attended",
-    "2024-08-12": "not attended",
-    // Add more dates as needed
-  });
+const CalendarComp = () => {
+  const [attendanceData, setAttendanceData] = useState({});
+  const [dateValue, setDateValue] = useState(new Date());
 
-  const monthStart = startOfMonth(currentDate);
-  const monthEnd = endOfMonth(currentDate);
-  const startDate = startOfWeek(monthStart);
-  const endDate = endOfWeek(monthEnd);
+  // Sample data for attendance
+  useEffect(() => {
+    setAttendanceData({
+      "2024-12-01": "attended",
+      "2024-12-02": "not attended",
+      "2024-12-03": "attended",
+      "2024-12-10": "not attended",
+    });
+  }, []);
 
-  const handlePrevMonth = () => setCurrentDate(subMonths(currentDate, 1));
-  const handleNextMonth = () => setCurrentDate(addMonths(currentDate, 1));
+  // Toggle attendance
+  const handleDayClick = (date) => {
+    const formattedDate = date.toISOString().split("T")[0];
+    const newStatus =
+      attendanceData[formattedDate] === "attended"
+        ? "not attended"
+        : "attended";
 
-  const days = [];
-  let day = startDate;
-  let formattedDate = "";
+    setAttendanceData({
+      ...attendanceData,
+      [formattedDate]: newStatus,
+    });
 
-  while (day <= endDate) {
-    const cloneDay = day;
-    formattedDate = format(day, "yyyy-MM-dd");
-    const isCurrentMonth = isSameMonth(day, monthStart);
-    const isToday = isSameDay(day, new Date());
-    const isPastDay = day < new Date(); // Check if the day is in the past
+    // Optionally sync with backend here
+  };
 
-    days.push(
-      <div
-        key={day}
-        className={`p-1 border rounded-md text-center
-                    ${!isCurrentMonth ? "bg-gray-300 text-gray-500" : ""}
-                    ${isCurrentMonth && isPastDay && attendanceData[formattedDate] === "attended" ? "bg-[#1ea4a3] text-white" : ""}
-                    ${isCurrentMonth && isPastDay && attendanceData[formattedDate] === "not attended" ? "bg-[#1769ae] text-white" : ""}
-                    ${isCurrentMonth && !attendanceData[formattedDate] && day < new Date() ? "bg-[#1769ae] text-white" : ""}
-                    ${isToday ? "border-2 border-red-500" : ""}`}
-      >
-        {format(day, "d")}
-      </div>
-    );
-    day = addDays(cloneDay, 1);
-  }
+  // Get day styles
+  const getTileClassName = ({ date, view }) => {
+    if (view !== "month") return ""; // Only style days in month view
+    const formattedDate = date.toISOString().split("T")[0];
+    const status = attendanceData[formattedDate];
+    if (status === "attended") return "bg-[#1EA4A3] text-white";
+    if (status === "not attended") return "bg-[#1769AE] text-white";
+    return ""; // Default
+  };
 
   return (
-    <div className="w-full mx-auto bg-white shadow-lg rounded-lg px-9 py-1">
-      <div className="my-2 text-center">
-        <p>{`${format(new Date(), "EEEE, MMMM d")}`}</p>
-      </div>
-      <div className="grid grid-cols-7 gap-2">{days}</div>
-      <div className="flex justify-between items-center my-2">
-        <button onClick={handlePrevMonth}>←</button>
-        <span>{format(currentDate, "MMMM yyyy")}</span>
-        <button onClick={handleNextMonth}>→</button>
+    <div className="w-full mx-auto">
+      {/* Calendar */}
+      <p className="text-center">
+        <span className="bold">يوم </span> {dateValue.getDate()}
+      </p>
+      <div className="calender-container">
+        <Calendar
+          locale="ar"
+          dateFormat="dd/MM/yyyy"
+          value={dateValue}
+          onChange={setDateValue}
+          onClickDay={handleDayClick}
+          tileClassName={getTileClassName}
+          className="p-3"
+          showNavigation={true} // Hide default navigation
+        />
       </div>
     </div>
   );
 };
 
-export default CalendarCard;
-
+export default CalendarComp;

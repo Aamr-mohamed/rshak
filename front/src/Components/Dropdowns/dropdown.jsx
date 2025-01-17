@@ -78,54 +78,39 @@ const ImageDropdown = ({ selectedOption, setSelectedOption }) => {
             />
 
             {/* Radio Buttons */}
-            <div className="px-5 flex flex-row gap-8">
-              <label className="block text-gray-700">
-                <input
-                  type="radio"
-                  name="bodyType"
-                  value="hourGlass"
-                  checked={selectedOption === "الخصر الرفيع"}
-                  onChange={handleOptionChange}
-                  className="mr-2 form-radio"
-                />
-                الخصر الرفيع
-              </label>
-
-              <label className="block text-gray-700">
-                <input
-                  type="radio"
-                  name="bodyType"
-                  value="pearl"
-                  checked={selectedOption === "كمثري"}
-                  onChange={handleOptionChange}
-                  className="mr-2"
-                />
-                كمثري
-              </label>
-
-              <label className="block text-gray-700">
-                <input
-                  type="radio"
-                  name="bodyType"
-                  value="straight"
-                  checked={selectedOption === "مستقیم"}
-                  onChange={handleOptionChange}
-                  className="mr-2"
-                />
-                مستقیم
-              </label>
-
-              <label className="block text-gray-700 ">
-                <input
-                  type="radio"
-                  name="bodyType"
-                  value="apple"
-                  checked={selectedOption === "تفاحه"}
-                  onChange={handleOptionChange}
-                  className="mr-2"
-                />
-                تفاحه
-              </label>
+            <div className="px-20 flex flex-row justify-between gap-7">
+              <input
+                type="radio"
+                name="bodyType"
+                value="apple"
+                checked={selectedOption === "تفاحه"}
+                onChange={handleOptionChange}
+                className="mr-2"
+              />
+              <input
+                type="radio"
+                name="bodyType"
+                value="straight"
+                checked={selectedOption === "مستقیم"}
+                onChange={handleOptionChange}
+                className="mr-2"
+              />
+              <input
+                type="radio"
+                name="bodyType"
+                value="pearl"
+                checked={selectedOption === "كمثري"}
+                onChange={handleOptionChange}
+                className="mr-2"
+              />
+              <input
+                type="radio"
+                name="bodyType"
+                value="hourGlass"
+                checked={selectedOption === "الخصر الرفيع"}
+                onChange={handleOptionChange}
+                className="mr-2 form-radio"
+              />
             </div>
           </div>
         </div>

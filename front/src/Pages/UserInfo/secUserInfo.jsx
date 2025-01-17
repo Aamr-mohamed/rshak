@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import loginPic from "../../assets/login.png";
 import bgVector from "../../assets/bgVector.svg";
-import { Form, Formik } from "formik";
-import { useNavigate } from "react-router-dom";
+import { ErrorMessage, Form, Formik } from "formik";
+import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { customToast } from "../../Utils/toast";
 import { toast } from "react-toastify";
@@ -13,17 +13,26 @@ import ImageDropdown from "../../Components/Dropdowns/dropdown";
 export default function SecUserInfo() {
   const backendUrl = process.env.REACT_APP_API_URL;
   const navigate = useNavigate();
+  const location = useLocation();
+  const formData = location.state;
+  console.log(formData);
 
   const userInfoSchema = yup.object().shape({
-    bodyType: yup.string().required("required"),
-    weight: yup.string(),
-    height: yup.string().required("required"),
+    bodyType: yup.string().required("النوع الجسم مطلوب"),
+    weight: yup.number().required("الوزن مطلوب"),
+    height: yup.number().required("الطول مطلوب"),
     foodType: yup.string(),
     gymTime: yup.string(),
     gymAddress: yup.string(),
+    diabetesNum: yup.number().required("الرقم المطلوب"),
   });
 
-  const verification = async (values) => {};
+  const verification = async (values) => {
+    console.log(values);
+    // values = formData + values
+    values = { ...values, ...formData };
+    navigate("/calenderuserinfo", { state: values });
+  };
 
   const initialValuesUserInfo = {
     bodyType: "",
@@ -32,6 +41,7 @@ export default function SecUserInfo() {
     foodType: "",
     gymTime: "",
     gymAddress: "",
+    diabetesNum: "",
   };
   return (
     <div className="flex h-screen">
@@ -72,12 +82,13 @@ export default function SecUserInfo() {
             >
               {(props) => (
                 <Form className="flex flex-col gap-5 w-[100%]">
-				<ImageDropdown
+                  <ImageDropdown
                     selectedOption={props.values.bodyType}
                     setSelectedOption={(value) => {
                       props.setFieldValue("bodyType", value);
                     }}
-                  />					{/*
+                  />{" "}
+                  {/*
                   <select
                     dir="rtl"
                     className="w-full px-[20px] py-[10px] rounded-lg border-[1.5px] border-[#1769AE] text-sm text-right font-bold text-[#1EA4A3] placeholder-[#1EA4A3]"
@@ -103,22 +114,46 @@ export default function SecUserInfo() {
                   </select>
 									*/}
                   <input
-                    type="text"
+                    type="number"
                     onChange={props.handleChange}
                     onBlur={props.handleBlur}
                     value={props.values.weight}
                     name="weight"
-                    className="w-full px-[20px] py-[10px] rounded-md border-[1.5px] border-[#1769AE] text-sm text-right font-bold text-[#1EA4A3] placeholder-[#1EA4A3]"
+                    className="w-full px-[20px] py-[10px] rounded-md border-[1.5px] border-[#1769AE] text-sm text-right font-bold text-[#1EA4A3] placeholder-[#1EA4A3] [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                     placeholder="الوزن"
                   />
+                  <ErrorMessage
+                    name="weight"
+                    component="div"
+                    className="text-xs text-red-500 text-right"
+                  />
                   <input
-                    type="text"
+                    type="number"
                     onChange={props.handleChange}
                     onBlur={props.handleBlur}
                     value={props.values.height}
                     name="height"
-                    className="w-full px-[20px] py-[10px] rounded-md border-[1.5px] border-[#1769AE] text-sm text-right font-bold text-[#1EA4A3] placeholder-[#1EA4A3]"
+                    className="w-full px-[20px] py-[10px] rounded-md border-[1.5px] border-[#1769AE] text-sm text-right font-bold text-[#1EA4A3] placeholder-[#1EA4A3] [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                     placeholder="الطول"
+                  />
+                  <ErrorMessage
+                    name="height"
+                    component="div"
+                    className="text-xs text-red-500 text-right"
+                  />
+                  <input
+                    type="number"
+                    onChange={props.handleChange}
+                    onBlur={props.handleBlur}
+                    value={props.values.diabetesNum}
+                    name="diabetesNum"
+                    className="w-full px-[20px] py-[10px] rounded-md border-[1.5px] border-[#1769AE] text-sm text-right font-bold text-[#1EA4A3] placeholder-[#1EA4A3] [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                    placeholder="الطول"
+                  />
+                  <ErrorMessage
+                    name="diabetesNum"
+                    component="div"
+                    className="text-xs text-red-500 text-right"
                   />
                   <input
                     type="text"
@@ -129,6 +164,11 @@ export default function SecUserInfo() {
                     className="w-full px-[20px] py-[10px] rounded-md border-[1.5px] border-[#1769AE] text-sm text-right font-bold text-[#1EA4A3] placeholder-[#1EA4A3]"
                     placeholder="نوع الغذاء"
                   />
+                  <ErrorMessage
+                    name="foodType"
+                    component="div"
+                    className="text-xs text-red-500 text-right"
+                  />
                   <input
                     type="text"
                     onChange={props.handleChange}
@@ -138,6 +178,11 @@ export default function SecUserInfo() {
                     className="w-full px-[20px] py-[10px] rounded-md border-[1.5px] border-[#1769AE] text-sm text-right font-bold text-[#1EA4A3] placeholder-[#1EA4A3]"
                     placeholder="الوقت المقرر للنادي"
                   />
+                  <ErrorMessage
+                    name="gymTime"
+                    component="div"
+                    className="text-xs text-red-500 text-right"
+                  />
                   <input
                     type="text"
                     onChange={props.handleChange}
@@ -146,6 +191,11 @@ export default function SecUserInfo() {
                     name="gymAddress"
                     className="w-full px-[20px] py-[10px] rounded-md border-[1.5px] border-[#1769AE] text-sm text-right font-bold text-[#1EA4A3] placeholder-[#1EA4A3]"
                     placeholder="عنوان النادي"
+                  />
+                  <ErrorMessage
+                    name="gymAddress"
+                    component="div"
+                    className="text-xs text-red-500 text-right"
                   />
                   <button
                     type="submit"
